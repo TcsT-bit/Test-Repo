@@ -2,154 +2,237 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Windows 11 EduSim Pro 12.0 - NO JOKE</title>
+<title>Windows 11 2026 EduSim Pro</title>
+<meta name="theme-color" content="#0078D4">
 <style>
-*{box-sizing:border-box;font-family:'Segoe UI';margin:0}
-body{background:#1e1e1e;color:#fff;height:100vh;overflow:hidden}
-.desktop{height:calc(100vh - 48px);padding:20px;display:grid;grid-template-columns:repeat(auto-fill,90px);gap:20px}
-.icon{text-align:center;padding:8px;border-radius:4px;cursor:pointer}.icon:hover{background:rgba(255,255,255,0.1)}
-.window{position:absolute;width:800px;height:500px;background:#2d2d2d;border:1px solid #555;display:none;flex-direction:column;border-radius:6px;z-index:10}
-.titlebar{height:30px;background:#333;display:flex;align-items:center;justify-content:space-between;padding:0 10px;cursor:move}
-.content{flex:1;overflow:auto;padding:10px;background:#1e1e1e}
-.taskbar{position:fixed;bottom:0;left:0;right:0;height:48px;background:#202020;display:flex;align-items:center;padding:0 10px}
-.btn{padding:6px 12px;background:#0078D4;border:none;color:#fff;cursor:pointer;margin:2px}
-input,textarea{background:#3c3c3c;color:#fff;border:1px solid #555;padding:5px;width:100%}
-table{border-collapse:collapse}td,th{border:1px solid #555;padding:4px}
-#paint{border:1px solid #555;cursor:crosshair;background:#fff}
+@import url('https://fonts.googleapis.com/css2?family=Segoe+UI+Variable:wght@300;400;600;700&display=swap');
+:root{--accent:#0078D4;--bg:#1a1a1a;--glass:rgba(30,30,30,0.7)}
+*{box-sizing:border-box;font-family:'Segoe UI Variable',sans-serif;margin:0;user-select:none}
+body{background:linear-gradient(135deg,#0a0a0a,#1a1a2e) fixed;height:100vh;overflow:hidden;color:#fff}
+
+/* 2026 GLASS EFFECT */
+.glass{background:var(--glass);backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.1)}
+
+/* DESKTOP */
+.desktop{height:calc(100vh - 52px);padding:24px;display:grid;grid-template-columns:repeat(auto-fill,96px);gap:24px}
+.icon{text-align:center;padding:8px;border-radius:8px;cursor:pointer;transition:0.2s}
+.icon:hover{background:rgba(255,255,255,0.08);transform:scale(1.05)}
+.icon img{width:48px;height:48px;margin-bottom:6px}
+
+/* WINDOWS 2026 - ROUNDED + SHADOW + SNAP */
+.window{position:absolute;width:1000px;height:650px;background:var(--glass);backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.1);box-shadow:0 20px 60px rgba(0,0,0,0.5);display:none;flex-direction:column;border-radius:12px;z-index:10;animation:winIn 0.25s}
+@keyframes winIn{from{opacity:0;transform:scale(0.96)}to{opacity:1;transform:scale(1)}}
+.titlebar{height:40px;background:transparent;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-weight:600}
+.titlebar-tabs{display:flex;gap:4px}.tab{padding:6px 12px;background:rgba(255,255,255,0.08);border-radius:6px;font-size:13px;cursor:pointer}
+.titlebar-controls{display:flex;gap:4px}.titlebar-controls button{background:none;border:none;color:#fff;font-size:16px;width:32px;height:32px;border-radius:4px;cursor:pointer}
+.titlebar-controls button:hover{background:rgba(255,255,0.1)}
+.content{flex:1;overflow:auto;padding:16px;background:rgba(0,0,0,0.2);border-radius:0 0 12px 12px}
+
+/* TASKBAR 2026 CENTERED */
+.taskbar{position:fixed;bottom:8px;left:50%;transform:translateX(-50%);height:52px;background:var(--glass);backdrop-filter:blur(30px);border-radius:12px;display:flex;align-items:center;padding:0 8px;border:1px solid rgba(255,255,255,0.1)}
+.task-app{padding:8px 12px;margin:0 2px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:6px}
+.task-app:hover{background:rgba(255,255,255,0.1)}.task-app.active{background:var(--accent)}
+
+/* START 2026 */
+.start{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);width:700px;height:780px;background:var(--glass);backdrop-filter:blur(30px);border-radius:12px;display:none;padding:24px;border:1px solid rgba(255,255,255,0.1)}
+.start-search{width:100%;padding:12px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;margin-bottom:20px;font-size:15px}
+.app-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+
+/* WIDGETS + COPILOT + QUICK */
+.widgets{position:fixed;top:0;left:-420px;width:420px;height:100%;background:var(--glass);backdrop-filter:blur(30px);transition:0.3s;padding:24px;z-index:9998}
+.widgets.open{left:0}
+copilot{position:fixed;bottom:70px;right:20px;width:380px;height:600px;background:var(--glass);backdrop-filter:blur(30px);border-radius:12px;display:none;padding:16px;border:1px solid rgba(255,255,255,0.1)}
+.quick{position:fixed;bottom:70px;right:20px;width:360px;background:var(--glass);backdrop-filter:blur(30px);border-radius:12px;display:none;padding:16px;border:1px solid rgba(255,255,255,0.1)}
+
+.btn{padding:8px 16px;background:var(--accent);border:none;color:#fff;border-radius:6px;cursor:pointer;font-weight:600}
+input,textarea{background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.1);padding:8px;border-radius:6px;width:100%}
+#paint{border:1px solid rgba(255,255,255,0.1);cursor:crosshair;background:#fff;border-radius:6px}
+.snappoint{position:absolute;border:2px dashed var(--accent);background:rgba(0,120,212,0.2);display:none;z-index:9999}
 </style>
 </head>
 <body>
 
+<!-- WIDGETS 2026 -->
+<div class="widgets glass" id="widgets">
+  <h2>Widgets</h2>
+  <div class="glass" style="padding:16px;border-radius:8px;margin:12px 0">
+    <b>Johannesburg</b> <div style="font-size:32px">24°C ☀️</div>
+  </div>
+  <div class="glass" style="padding:16px;border-radius:8px;margin:12px 0">
+    <b>Copilot News</b><br>AI will teach 50% of SA schools by 2026
+  </div>
+  <div class="glass" style="padding:16px;border-radius:8px;margin:12px 0">
+    <b>Calendar</b><br>Next Exam: 15 Aug 2026
+  </div>
+</div>
+
+<!-- COPILOT AI -->
+<div id="copilot" class="glass">
+  <h3>🤖 Copilot</h3>
+  <div id="chat" style="height:480px;overflow:auto;margin:10px 0"></div>
+  <input id="copilotInput" placeholder="Ask me anything..." onkeydown="if(event.key=='Enter')askCopilot()">
+</div>
+
+<!-- QUICK SETTINGS -->
+<div id="quick" class="glass">
+  <h3>Quick Settings</h3>
+  <div>🔊 Volume <input type="range" oninput="setVol(this.value)"></div>
+  <div>☀️ Brightness <input type="range"></div>
+  <div>🌙 <button onclick="toggleTheme()">Dark/Light</button></div>
+  <div>📶 WiFi: Connected</div>
+</div>
+
+<!-- START MENU 2026 -->
+<div id="start" class="start glass">
+  <input class="start-search" placeholder="Search apps, settings, and web">
+  <h3>Pinned</h3>
+  <div class="app-grid">
+    <div onclick="openWin('edge')">🌐 Edge</div><div onclick="openWin('word')">📄 Word</div><div onclick="openWin('excel')">📊 Excel</div>
+    <div onclick="openWin('ppt')">📽️ PowerPoint</div><div onclick="openWin('teams')">👥 Teams</div><div onclick="openWin('store')">🛍️ Store</div>
+    <div onclick="openWin('photos')">🖼️ Photos</div><div onclick="openWin('paint')">🎨 Paint</div><div onclick="openWin('vscode')">💻 VS Code</div>
+    <div onclick="openWin('settings')">⚙️ Settings</div><div onclick="openWin('explorer')">📁 Explorer</div><div onclick="openWin('terminal')">💻 Terminal</div>
+  </div>
+</div>
+
+<!-- DESKTOP -->
 <div class="desktop" id="desktop">
-  <div class="icon" ondblclick="openWin('explorer')"><div>📁</div>File Explorer</div>
-  <div class="icon" ondblclick="openWin('notepad')"><div>📝</div>Notepad</div>
-  <div class="icon" ondblclick="openWin('paint')"><div>🎨</div>Paint</div>
-  <div class="icon" ondblclick="openWin('calc')"><div>🔢</div>Calculator</div>
-  <div class="icon" ondblclick="openWin('browser')"><div>🌐</div>Browser</div>
-  <div class="icon" ondblclick="openWin('terminal')"><div>💻</div>Terminal</div>
-  <div class="icon" ondblclick="openWin('excel')"><div>📊</div>Excel</div>
-  <div class="icon" ondblclick="openWin('player')"><div>🎵</div>Media Player</div>
+  <div class="icon" ondblclick="openWin('edge')"><img src="https://img.icons8.com/color/48/microsoft-edge.png">Edge</div>
+  <div class="icon" ondblclick="openWin('explorer')"><img src="https://img.icons8.com/color/48/file-explorer.png">Explorer</div>
+  <div class="icon" ondblclick="openWin('word')"><img src="https://img.icons8.com/color/48/ms-word.png">Word</div>
+  <div class="icon" ondblclick="openWin('excel')"><img src="https://img.icons8.com/color/48/ms-excel.png">Excel</div>
+  <div class="icon" ondblclick="openWin('ppt')"><img src="https://img.icons8.com/color/48/ms-powerpoint.png">PowerPoint</div>
+  <div class="icon" ondblclick="openWin('paint')"><img src="https://img.icons8.com/color/48/paint.png">Paint</div>
+  <div class="icon" ondblclick="openWin('vscode')"><img src="https://img.icons8.com/color/48/visual-studio-code-2019.png">VS Code</div>
+  <div class="icon" ondblclick="openWin('teams')"><img src="https://img.icons8.com/color/48/microsoft-teams.png">Teams</div>
 </div>
 
-<!-- FILE EXPLORER - REAL TABS + FILES -->
-<div class="window" id="explorer">
-  <div class="titlebar"><span>File Explorer</span><button onclick="closeWin('explorer')">×</button></div>
+<!-- WINDOWS -->
+<div class="window glass" id="explorer">
+  <div class="titlebar" onmousedown="drag(event,'explorer')"><span>File Explorer</span>
+    <div class="titlebar-tabs"><div class="tab" onclick="setDrive('C:')">C:</div><div class="tab" onclick="setDrive('D:')">D:</div></div>
+    <div class="titlebar-controls"><button onclick="snapWin('explorer','max')">□</button><button onclick="closeWin('explorer')">×</button></div>
+  </div>
+  <div class="content"><button onclick="newFile()">New</button><button onclick="uploadFile()">Upload</button><div id="fileList"></div></div>
+</div>
+
+<div class="window glass" id="word">
+  <div class="titlebar" onmousedown="drag(event,'word')"><span>Word 2026</span><div class="titlebar-controls"><button onclick="closeWin('word')">×</button></div></div>
   <div class="content">
-    <div id="tabs"></div>
-    <button onclick="newTab('C:')">C:</button><button onclick="newTab('D:')">D:</button><button onclick="newFolder()">New Folder</button>
-    <div id="fileList"></div>
+    <button onclick="doc.execCommand('bold')">B</button><button onclick="doc.execCommand('italic')">I</button><button onclick="saveDoc()">Save</button>
+    <div id="doc" contenteditable style="background:#fff;color:#000;height:500px;padding:10px;margin-top:10px"></div>
   </div>
 </div>
 
-<!-- NOTEPAD - REAL SAVE/LOAD -->
-<div class="window" id="notepad">
-  <div class="titlebar"><span>Notepad</span><button onclick="closeWin('notepad')">×</button></div>
-  <div class="content">
-    <button onclick="saveTxt()">Save.txt</button><button onclick="loadTxt()">Open.txt</button>
-    <textarea id="noteText" style="height:400px"></textarea>
-  </div>
-</div>
-
-<!-- PAINT - REAL DRAWING -->
-<div class="window" id="paint">
-  <div class="titlebar"><span>Paint</span><button onclick="closeWin('paint')">×</button></div>
-  <div class="content">
-    <canvas id="paint" width="750" height="400"></canvas><br>
-    <button onclick="savePaint()">Save PNG</button><input type="color" id="paintColor">
-  </div>
-</div>
-
-<!-- CALCULATOR - REAL MATH -->
-<div class="window" id="calc">
-  <div class="titlebar"><span>Calculator</span><button onclick="closeWin('calc')">×</button></div>
-  <div class="content">
-    <input id="calcDisplay"><br>
-    <button onclick="calcPress('7')">7</button><button onclick="calcPress('8')">8</button><button onclick="calcPress('9')">9</button><button onclick="calcPress('/')">/</button><br>
-    <button onclick="calcPress('4')">4</button><button onclick="calcPress('5')">5</button><button onclick="calcPress('6')">6</button><button onclick="calcPress('*')">*</button><br>
-    <button onclick="calcPress('1')">1</button><button onclick="calcPress('2')">2</button><button onclick="calcPress('3')">3</button><button onclick="calcPress('-')">-</button><br>
-    <button onclick="calcPress('0')">0</button><button onclick="calcResult()">=</button><button onclick="calcPress('+')">+</button>
-  </div>
-</div>
-
-<!-- BROWSER - REAL TABS -->
-<div class="window" id="browser">
-  <div class="titlebar"><span>Browser</span><button onclick="closeWin('browser')">×</button></div>
-  <div class="content">
-    <input id="url" placeholder="https://google.com"><button onclick="go()">Go</button>
-    <iframe id="web" style="width:100%;height:400px;border:none"></iframe>
-  </div>
-</div>
-
-<!-- TERMINAL - REAL COMMANDS -->
-<div class="window" id="terminal">
-  <div class="titlebar"><span>Terminal</span><button onclick="closeWin('terminal')">×</button></div>
-  <div class="content" style="background:#000;font-family:monospace">
-    <div id="termOut"></div><input id="termIn" onkeydown="if(event.key=='Enter')runTerm()">
-  </div>
-</div>
-
-<!-- EXCEL - REAL FORMULAS -->
-<div class="window" id="excel">
-  <div class="titlebar"><span>Excel</span><button onclick="closeWin('excel')">×</button></div>
+<div class="window glass" id="excel">
+  <div class="titlebar" onmousedown="drag(event,'excel')"><span>Excel 2026</span><div class="titlebar-controls"><button onclick="closeWin('excel')">×</button></div></div>
   <div class="content"><div id="excelGrid"></div><button onclick="calcExcel()">Calculate</button></div>
 </div>
 
-<!-- MEDIA PLAYER -->
-<div class="window" id="player">
-  <div class="titlebar"><span>Media Player</span><button onclick="closeWin('player')">×</button></div>
-  <div class="content"><input type="file" accept="audio/*,video/*" onchange="playMedia(event)"><video id="media" controls style="width:100%"></video></div>
+<div class="window glass" id="paint">
+  <div class="titlebar" onmousedown="drag(event,'paint')"><span>Paint 2026</span><div class="titlebar-controls"><button onclick="closeWin('paint')">×</button></div></div>
+  <div class="content"><canvas id="paint" width="950" height="500"></canvas><br><input type="color" id="pColor"><button onclick="savePaint()">Save PNG</button></div>
 </div>
 
-<div class="taskbar"><button onclick="showDesktop()">Desktop</button><div id="taskList"></div></div>
+<div class="window glass" id="vscode">
+  <div class="titlebar" onmousedown="drag(event,'vscode')"><span>VS Code</span><div class="titlebar-controls"><button onclick="closeWin('vscode')">×</button></div></div>
+  <div class="content"><textarea id="code" style="height:500px;font-family:Consolas">console.log('Hello 2026')</textarea><button onclick="runCode()">Run</button><div id="codeOut"></div></div>
+</div>
+
+<div class="window glass" id="edge">
+  <div class="titlebar" onmousedown="drag(event,'edge')"><span>Edge</span><div class="titlebar-controls"><button onclick="closeWin('edge')">×</button></div></div>
+  <div class="content"><input id="url" placeholder="Search or enter address"><button onclick="go()">Go</button><iframe id="web" style="width:100%;height:550px;border:none"></iframe></div>
+</div>
+
+<div class="window glass" id="terminal">
+  <div class="titlebar" onmousedown="drag(event,'terminal')"><span>Windows Terminal</span><div class="titlebar-controls"><button onclick="closeWin('terminal')">×</button></div></div>
+  <div class="content" style="background:#000;font-family:Consolas"><div id="term"></div><input id="cmd" onkeydown="if(event.key=='Enter')runCmd()"></div>
+</div>
+
+<div class="window glass" id="settings">
+  <div class="titlebar" onmousedown="drag(event,'settings')"><span>Settings</span><div class="titlebar-controls"><button onclick="closeWin('settings')">×</button></div></div>
+  <div class="content"><h3>Personalization</h3><button onclick="changeBG()">Change Wallpaper</button></div>
+</div>
+
+<!-- TASKBAR -->
+<div class="taskbar glass">
+  <div class="task-app" onclick="toggleWidgets()">📌</div>
+  <div class="task-app" onclick="toggleStart()">⊞</div>
+  <div id="tasks"></div>
+  <div class="task-app" onclick="toggleCopilot()">🤖</div>
+  <div class="task-app" onclick="toggleQuick()">🔊</div>
+</div>
+
+<div id="snappoint" class="snappoint"></div>
 
 <script>
-let files={C:['Windows','Users'],D:['Data']}, currentTab='C:', openWins=[];
-let termFS={C:{},D:{}};
+let open=[],z=100,drive='C:',fs=JSON.parse(localStorage.getItem('fs2026')||'{"C:":["Windows","Users"],"D:":["Data"]}');
 
-// WINDOWS
-function openWin(id){document.getElementById(id).style.display='flex';if(!openWins.includes(id)){openWins.push(id);document.getElementById('taskList').innerHTML+=`<button onclick="focusWin('${id}')">${id}</button>`}}
-function closeWin(id){document.getElementById(id).style.display='none';openWins=openWins.filter(w=>w!=id)}
-function focusWin(id){document.getElementById(id).style.zIndex=999}
-function showDesktop(){openWins.forEach(id=>document.getElementById(id).style.display='none')}
+// WINDOW MANAGEMENT 2026
+function openWin(id){let w=document.getElementById(id);w.style.display='flex';z++;w.style.zIndex=z;if(!open.includes(id)){open.push(id);document.getElementById('tasks').innerHTML+=`<div class="task-app active" onclick="focus('${id}')">${id}</div>`}}
+function closeWin(id){document.getElementById(id).style.display='none';open=open.filter(x=>x!=id)}
+function focus(id){z++;document.getElementById(id).style.zIndex=z}
+function toggleStart(){document.getElementById('start').style.display=document.getElementById('start').style.display=='block'?'none':'block'}
+function toggleWidgets(){document.getElementById('widgets').classList.toggle('open')}
+function toggleCopilot(){document.getElementById('copilot').style.display=document.getElementById('copilot').style.display=='block'?'none':'block'}
+function toggleQuick(){document.getElementById('quick').style.display=document.getElementById('quick').style.display=='block'?'none':'block'}
+
+// DRAG + SNAP LAYOUTS
+let dragging=null;
+function drag(e,id){dragging={id,x:e.clientX,y:e.clientY};document.onmousemove=move;document.onmouseup=drop}
+function move(e){if(!dragging)return;let w=document.getElementById(dragging.id);
+w.style.left=w.offsetLeft+e.clientX-dragging.x+'px';w.style.top=w.offsetTop+e.clientY-dragging.y+'px';
+// SNAP
+let snap=document.getElementById('snappoint');
+if(e.clientY<30){snap.style.cssText='top:0;left:0;width:100%;height:100%;display:block'} // MAX
+else if(e.clientX<20){snap.style.cssText='top:0;left:0;width:50%;height:100%;display:block'} // LEFT
+else if(e.clientX>window.innerWidth-20){snap.style.cssText='top:0;left:50%;width:50%;height:100%;display:block'} // RIGHT
+else snap.style.display='none';
+dragging.x=e.clientX;dragging.y=e.clientY}
+function drop(){dragging=null;document.getElementById('snappoint').style.display='none'}
+function snapWin(id,pos){let w=document.getElementById(id);if(pos=='max'){w.style.cssText+='top:0;left:0;width:100%;height:100%'}}
 
 // FILE EXPLORER REAL
-function newTab(drive){currentTab=drive;loadFiles()}
-function loadFiles(){document.getElementById('fileList').innerHTML=files[currentTab].map(f=>`<div ondblclick="openFile('${f}')">${f}</div>`).join('')}
-function newFolder(){let name=prompt("Name:");if(name){files[currentTab].push(name);localStorage.setItem('fs',JSON.stringify(files));loadFiles()}}
-function openFile(f){showToast("Opening "+f)}
+function setDrive(d){drive=d;loadFiles()}
+function loadFiles(){document.getElementById('fileList').innerHTML=fs[drive].map(f=>`<div>${f}</div>`).join('')}
+function newFile(){let n=prompt("Name:");if(n){fs[drive].push(n);localStorage.setItem('fs2026',JSON.stringify(fs));loadFiles()}}
+function uploadFile(){let i=document.createElement('input');i.type='file';i.click()}
 
-// NOTEPAD REAL SAVE
-function saveTxt(){let blob=new Blob([document.getElementById('noteText').value]);let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download="note.txt";a.click()}
-function loadTxt(){let i=document.createElement('input');i.type='file';i.onchange=e=>{let r=new FileReader();r.onload=ev=>document.getElementById('noteText').value=ev.target.result;r.readAsText(e.target.files[0])};i.click()}
+// WORD REAL
+let doc=document.getElementById('doc');
+function saveDoc(){let a=document.createElement('a');a.download='document.docx';a.href=URL.createObjectURL(new Blob([doc.innerHTML]));a.click()}
+
+// EXCEL REAL FORMULAS
+let eg=document.getElementById('excelGrid');
+for(let r=0;r<20;r++){for(let c=0;c<10;c++)eg.innerHTML+=`<input id="e${r}${c}" style="width:80px">`;eg.innerHTML+='<br>'}
+function calcExcel(){for(let r=0;r<20;r++)for(let c=0;c<10;c++){let v=document.getElementById(`e${r}${c}`).value;if(v.startsWith('='))document.getElementById(`e${r}${c}`).value=Function('return '+v.slice(1))()}}
 
 // PAINT REAL
-let paint=document.getElementById('paint'),pctx=paint.getContext('2d'),drawing=false;
-paint.onmousedown=()=>drawing=true;paint.onmouseup=()=>drawing=false;
-paint.onmousemove=e=>{if(drawing){pctx.fillStyle=document.getElementById('paintColor').value;pctx.fillRect(e.offsetX,e.offsetY,4,4)}}
-function savePaint(){let a=document.createElement('a');a.download='paint.png';a.href=paint.toDataURL();a.click()}
+let p=document.getElementById('paint'),ctx=p.getContext('2d'),draw=false;
+p.onmousedown=()=>draw=true;p.onmouseup=()=>draw=false;
+p.onmousemove=e=>{if(draw){ctx.fillStyle=document.getElementById('pColor').value;ctx.fillRect(e.offsetX,e.offsetY,5,5)}}
+function savePaint(){let a=document.createElement('a');a.download='paint.png';a.href=p.toDataURL();a.click()}
 
-// CALCULATOR REAL
-function calcPress(v){document.getElementById('calcDisplay').value+=v}
-function calcResult(){document.getElementById('calcDisplay').value=eval(document.getElementById('calcDisplay').value)}
+// VS CODE REAL
+function runCode(){try{document.getElementById('codeOut').innerText=eval(document.getElementById('code').value)}catch(e){document.getElementById('codeOut').innerText=e}}
 
-// BROWSER REAL
+// BROWSER
 function go(){document.getElementById('web').src=document.getElementById('url').value}
 
-// TERMINAL REAL
-function runTerm(){let cmd=document.getElementById('termIn').value;let out=document.getElementById('termOut');
-if(cmd=='dir')out.innerHTML+=`<br>${files[currentTab].join(' ')}`;
-if(cmd.startsWith('mkdir')){files[currentTab].push(cmd.split(' ')[1]);loadFiles()}
-out.innerHTML+=`<br>C:\\${currentTab}>`;document.getElementById('termIn').value=''}
+// TERMINAL
+function runCmd(){let c=document.getElementById('cmd').value;document.getElementById('term').innerHTML+=`<br>C:\\${drive}>${c}<br>${c=='dir'?fs[drive].join(' '):''}`;document.getElementById('cmd').value=''}
 
-// EXCEL REAL
-let excelGrid=document.getElementById('excelGrid');
-for(let r=0;r<10;r++){for(let c=0;c<5;c++)excelGrid.innerHTML+=`<input id="c${r}${c}" style="width:80px">`;excelGrid.innerHTML+='<br>'}
-function calcExcel(){for(let r=0;r<10;r++)for(let c=0;c<5;c++){let v=document.getElementById(`c${r}${c}`).value;if(v.startsWith('='))document.getElementById(`c${r}${c}`).value=eval(v.slice(1))}}
+// COPILOT AI SIMULATED
+function askCopilot(){let q=document.getElementById('copilotInput').value;document.getElementById('chat').innerHTML+=`<div><b>You:</b> ${q}</div>`;document.getElementById('chat').innerHTML+=`<div><b>Copilot:</b> I can help you with ${q}. Try opening Word or Excel.</div>`;document.getElementById('copilotInput').value=''}
 
-// MEDIA
-function playMedia(e){document.getElementById('media').src=URL.createObjectURL(e.target.files[0])}
+// THEME
+function toggleTheme(){document.body.style.filter=document.body.style.filter?'':'invert(1)'}
 
-function showToast(m){alert(m)}
+// KEYBOARD
+document.onkeydown=e=>{
+  if(e.altKey&&e.key=='Tab'){alert('Alt+Tab: '+open.join(', '))}
+  if(e.ctrlKey&&e.shiftKey&&e.key=='D'){open.forEach(closeWin)} // Virtual Desktop
+}
+
 loadFiles();
 </script>
 </body>
