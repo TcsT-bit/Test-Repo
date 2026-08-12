@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G-COMPUTER STUDIES | Learn Word Excel PowerPoint</title>
+
+<!-- PWA + Link Preview -->
+<meta name="theme-color" content="#004000">
+<meta property="og:title" content="G-COMPUTER STUDIES | Learn Microsoft Office">
+<meta property="og:description" content="Learn Word, Excel, PowerPoint on your phone. For Students">
+<meta property="og:image" content="https://i.ibb.co/21yBxZ1t/Screenshot-20260812-111458-com-whatsapp-w4b-edit-616702181103025.jpg">
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiRy1DT01QVVRFUiBTVFVESUVTIiwic2hvcnRfbmFtZSI6IkdDT01QVVRFUiIsInN0YXJ0X3VybCI6IiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwMDQwMDAiLCJ0aGVtZV9jb2xvciI6IiMwMDY0MDAiLCJpY29ucyI6W3sic3JjIjoiaHR0cHM6Ly9pLmliYi5jby8yMXlCeFoXdC9TY3JlZW5zaG90LTIwMjYwODEyLTExMTQ1OC1jb20td2hhdHNhcHAtdzRiLWVkaXQtNjE2NzAyMTgxMTAzMDI1LmpwZyIsInNpemVzIjoiNTEyeDUxMiIsInR5cGUiOiJpbWFnZS9qcGVnIn1dfQ==">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+:root{--bg:#eef5ee;--card:#fff;--accent:#006400;--accent2:#004000;--text:#1a2e1a;--border:#c8e6c9}
+*{box-sizing:border-box;font-family:'Poppins',sans-serif}body{margin:0;background:var(--bg);color:var(--text)}
+.header{background:linear-gradient(90deg,#004000,#006400);padding:12px;color:#fff;text-align:center;position:sticky;top:0;z-index:99}
+.header h2{margin:0;font-size:16px}
+.tabs{display:flex;background:#fff;overflow-x:auto;border-bottom:2px solid var(--border)}
+.tab{flex:1;padding:12px;text-align:center;font-weight:700;cursor:pointer;white-space:nowrap}
+.tab.active{background:var(--accent);color:#fff}
+.container{padding:12px;max-width:900px;margin:0 auto}
+.card{background:var(--card);padding:15px;border-radius:12px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.btn{background:var(--accent);color:#fff;border:none;padding:10px 15px;border-radius:8px;font-weight:700;cursor:pointer;margin:5px 0}
+.btn-row{display:flex;gap:5px;flex-wrap:wrap}
+.toolbar{background:#f0f7f0;padding:8px;border-radius:8px;display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+.toolbar button{padding:6px 10px;border:1px solid var(--border);background:#fff;border-radius:5px;cursor:pointer;font-weight:600}
+#wordEditor{min-height:250px;border:1px solid var(--border);padding:10px;border-radius:8px;background:#fff;outline:none}
+.excel-grid{display:grid;grid-template-columns:50px repeat(5,1fr);gap:2px}
+.excel-grid input{width:100%;padding:6px;border:1px solid var(--border)}
+.ppt-slide{border:2px dashed var(--accent);min-height:300px;padding:20px;background:#fff;border-radius:8px;text-align:center}
+.quiz-q{font-weight:600;margin:10px 0}
+.footer{text-align:center;padding:15px;font-size:12px;color:var(--muted)}
+.lesson{border-left:4px solid var(--accent);padding-left:10px;margin:10px 0}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h2>💻 G-COMPUTER STUDIES</h2>
+  <small>Learn Word, Excel, PowerPoint on your Phone</small>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('desktop', this)">Desktop</div>
+  <div class="tab" onclick="showTab('word', this)">Word</div>
+  <div class="tab" onclick="showTab('excel', this)">Excel</div>
+  <div class="tab" onclick="showTab('ppt', this)">PowerPoint</div>
+  <div class="tab" onclick="showTab('lessons', this)">Lessons</div>
+</div>
+
+<div class="container">
+
+  <!-- DESKTOP -->
+  <div id="tab-desktop" class="tab-content">
+    <div class="card">
+      <h3>🖥️ Windows Desktop Simulator</h3>
+      <p>Click icons to open apps. This is how Windows works.</p>
+      <div class="btn-row">
+        <button class="btn" onclick="showTab('word', document.querySelectorAll('.tab')[1])">📄 Microsoft Word</button>
+        <button class="btn" onclick="showTab('excel', document.querySelectorAll('.tab')[2])">📊 Microsoft Excel</button>
+        <button class="btn" onclick="showTab('ppt', document.querySelectorAll('.tab')[3])">📽️ PowerPoint</button>
+      </div>
+      <div class="card" style="background:#004000;color:#fff">
+        <b>Taskbar:</b> Start | Search | Apps are here. In real Windows this is always at bottom.
+      </div>
+    </div>
+  </div>
+
+  <!-- WORD -->
+  <div id="tab-word" class="tab-content" style="display:none">
+    <div class="card">
+      <h3>📄 Microsoft Word Simulator</h3>
+      <div class="toolbar">
+        <button onclick="format('bold')"><b>B</b></button>
+        <button onclick="format('italic')"><i>I</i></button>
+        <button onclick="format('underline')"><u>U</u></button>
+        <button onclick="format('insertOrderedList')">1. List</button>
+        <button onclick="format('justifyCenter')">Center</button>
+      </div>
+      <div id="wordEditor" contenteditable="true">Type your document here... 
+Try making this text BOLD or ITALIC using the buttons above.</div>
+      <button class="btn" onclick="alert('In real Word: File > Save As')">💾 Save Document</button>
+    </div>
+    <div class="card lesson">
+      <b>Lesson 1: Word Basics</b><br>
+      1. Bold = Makes text thick. Shortcut: Ctrl+B<br>
+      2. Italic = Slanted text. Shortcut: Ctrl+I<br>
+      3. Used for: Letters, Assignments, CVs
+    </div>
+  </div>
+
+  <!-- EXCEL -->
+  <div id="tab-excel" class="tab-content" style="display:none">
+    <div class="card">
+      <h3>📊 Microsoft Excel Simulator</h3>
+      <div class="excel-grid" id="excelGrid"></div>
+      <button class="btn" onclick="sumExcel()">=SUM(A1:A5)</button>
+      <span id="excelResult"></span>
+    </div>
+    <div class="card lesson">
+      <b>Lesson 2: Excel Basics</b><br>
+      1. Cells = Each box. Example: A1, B2<br>
+      2. Formula: Starts with = Example: =A1+B1<br>
+      3. SUM: =SUM(A1:A5) adds cells<br>
+      4. Used for: Marks, Budget, Graphs
+    </div>
+  </div>
+
+  <!-- POWERPOINT -->
+  <div id="tab-ppt" class="tab-content" style="display:none">
+    <div class="card">
+      <h3>📽️ PowerPoint Simulator</h3>
+      <input type="text" id="pptTitle" placeholder="Slide Title" style="width:100%;margin-bottom:8px">
+      <div class="ppt-slide" id="pptSlide" contenteditable="true">Click to type slide content...</div>
+      <button class="btn" onclick="startSlideshow()">▶️ Start Slideshow</button>
+    </div>
+    <div class="card lesson">
+      <b>Lesson 3: PowerPoint Basics</b><br>
+      1. Slides = Pages for presentation<br>
+      2. Used for: School Projects, Teaching<br>
+      3. Tips: Less text, Big Title, 1 idea per slide
+    </div>
+  </div>
+
+  <!-- LESSONS + QUIZ -->
+  <div id="tab-lessons" class="tab-content" style="display:none">
+    <div class="card">
+      <h3>📚 Top 5 Computer Lessons</h3>
+      <div class="lesson"><b>1. What is a Computer?</b> Input, Process, Output</div>
+      <div class="lesson"><b>2. Windows Basics</b> Desktop, Taskbar, Start Menu, Minimize/Maximize/Close</div>
+      <div class="lesson"><b>3. File Management</b> Create Folder, Copy, Paste, Delete</div>
+      <div class="lesson"><b>4. Microsoft Word</b> Typing, Formatting, Saving</div>
+      <div class="lesson"><b>5. Microsoft Excel</b> Cells, Formulas, Charts</div>
+    </div>
+    <div class="card">
+      <h3>❓ Quick Quiz</h3>
+      <div class="quiz-q">1. Shortcut for Bold?</div>
+      <button class="btn" onclick="checkAns(this, true)">Ctrl+B</button>
+      <button class="btn" onclick="checkAns(this, false)">Ctrl+S</button>
+      
+      <div class="quiz-q">2. What does =SUM do?</div>
+      <button class="btn" onclick="checkAns(this, true)">Adds numbers</button>
+      <button class="btn" onclick="checkAns(this, false)">Changes color</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">© 2026 G-COMPUTER STUDIES | For Students in South Africa</div>
+
+<script>
+function showTab(tab, el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  ['desktop','word','excel','ppt','lessons'].forEach(t=>{
+    document.getElementById('tab-'+t).style.display = t==tab?'block':'none'
+  })
+}
+function format(cmd){ document.execCommand(cmd, false, null); }
+
+// Build Excel Grid
+let grid = document.getElementById('excelGrid');
+grid.innerHTML = '<div></div><div>A</div><div>B</div><div>C</div><div>D</div><div>E</div>';
+for(let r=1;r<=10;r++){
+  grid.innerHTML += `<div><b>${r}</b></div>`;
+  for(let c=0;c<5;c++){
+    grid.innerHTML += `<input id="cell${r}${c}" type="number">`;
+  }
+}
+function sumExcel(){
+  let sum=0; for(let r=1;r<=5;r++){ let val = Number(document.getElementById(`cell${r}0`).value)||0; sum+=val; }
+  document.getElementById('excelResult').innerText = " Result: " + sum;
+}
+function startSlideshow(){
+  let title = document.getElementById('pptTitle').value;
+  let content = document.getElementById('pptSlide').innerText;
+  alert("SLIDESHOW MODE\nTitle: " + title + "\n\n" + content);
+}
+function checkAns(btn, correct){
+  if(correct){ btn.style.background='green'; alert('✅ Correct!') }
+  else { btn.style.background='red'; alert('❌ Try again') }
+}
+
+// Install PWA
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e => { deferredPrompt = e; });
+</script>
+</body>
+</html>
