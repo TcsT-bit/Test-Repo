@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Windows EduSim Pro 8.0 | For Schools</title>
+<title>Windows EduSim Pro 8.1 | For Schools</title>
 <meta name="theme-color" content="#0078D4">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap');
@@ -15,22 +15,27 @@ body{background:url('https://images.unsplash.com/photo-1554907984-15263bfd63bd?q
 .window{position:absolute;width:92%;height:82%;top:9%;left:4%;background:#fff;border:1px solid #888;box-shadow:0 10px 30px rgba(0,0,0,0.4);display:none;flex-direction:column;border-radius:4px;z-index:10;animation:pop 0.2s}
 @keyframes pop{from{transform:scale(0.9)}to{transform:scale(1)}}
 .titlebar{height:32px;background:linear-gradient(90deg,#0078D4,#005a9e);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 10px;font-size:14px;cursor:move}
+.titlebar button{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;width:30px}
 .content{flex:1;overflow:auto;padding:10px;background:#f3f3f3}
 .taskbar{position:fixed;bottom:0;left:0;right:0;height:48px;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);display:flex;align-items:center;padding:0 5px;justify-content:space-between;color:#fff}
+.start-menu{position:fixed;bottom:50px;left:5px;width:280px;background:#fff;border-radius:8px;box-shadow:0 5px 20px #000;display:none;padding:10px;z-index:999}
 .login{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;z-index:99999}
 .login-box{background:#fff;padding:20px;border-radius:8px;width:90%;max-width:320px;text-align:center}
 .btn{padding:10px 15px;background:#0078D4;color:#fff;border:none;border-radius:4px;cursor:pointer;margin:5px}
-.grade-btn{background:#e0e0e0;color:#000}.grade-btn.active{background:#0078D4;color:#fff}
+.grade-btn{background:#e0e0e0;color:#000;padding:8px 12px;border:none;border-radius:4px;margin:3px;cursor:pointer}
+.grade-btn.active{background:#0078D4;color:#fff}
 .dashboard-table{width:100%;border-collapse:collapse}.dashboard-table td,th{border:1px solid #ccc;padding:8px;text-align:left}
-.toast{position:fixed;bottom:60px;right:10px;background:#333;color:#fff;padding:10px;border-radius:5px;display:none}
+.toast{position:fixed;bottom:60px;right:10px;background:#333;color:#fff;padding:10px;border-radius:5px;display:none;z-index:9999}
+.excel-grid{display:grid;grid-template-columns:40px repeat(5,70px);gap:1px;background:#ccc}
+.excel-grid input{width:100%;border:none;padding:4px}
 </style>
 </head>
 <body>
 
-<!-- LOGIN: STUDENT OR TEACHER -->
+<!-- LOGIN -->
 <div class="login" id="loginScreen">
   <div class="login-box">
-    <h3>Windows EduSim Pro 8.0</h3>
+    <h3>Windows EduSim Pro 8.1</h3>
     <select id="userType" style="width:100%;padding:8px;margin:10px 0">
       <option value="student">Student Login</option>
       <option value="teacher">Teacher Login</option>
@@ -46,23 +51,22 @@ body{background:url('https://images.unsplash.com/photo-1554907984-15263bfd63bd?q
   <div class="icon" ondblclick="openWin('wordWin')"><img src="https://img.icons8.com/color/48/ms-word.png">Word</div>
   <div class="icon" ondblclick="openWin('excelWin')"><img src="https://img.icons8.com/color/48/ms-excel.png">Excel</div>
   <div class="icon" ondblclick="openWin('lessonWin')"><img src="https://img.icons8.com/color/48/graduation-cap.png">CAPS Lessons</div>
-  <div class="icon" ondblclick="openWin('dashboardWin')" id="dashboardIcon" style="display:none"><img src="https://img.icons8.com/color/48/combo-chart.png">Teacher Dashboard</div>
+  <div class="icon" ondblclick="openWin('dashboardWin')" id="dashboardIcon" style="display:none"><img src="https://img.icons8.com/color/48/combo-chart.png">Dashboard</div>
 </div>
 
-<!-- WINDOW: CAPS LESSONS -->
+<!-- WINDOWS -->
 <div class="window" id="lessonWin">
   <div class="titlebar"><span>CAPS Computer Studies</span><button onclick="closeWin('lessonWin')">×</button></div>
   <div class="content">
     <div>
-      <button class="grade-btn active" onclick="loadGrade(8)">Grade 8</button>
-      <button class="grade-btn" onclick="loadGrade(9)">Grade 9</button>
-      <button class="grade-btn" onclick="loadGrade(10)">Grade 10</button>
+      <button class="grade-btn active" onclick="loadGrade(8,this)">Grade 8</button>
+      <button class="grade-btn" onclick="loadGrade(9,this)">Grade 9</button>
+      <button class="grade-btn" onclick="loadGrade(10,this)">Grade 10</button>
     </div>
-    <div id="lessonContent"></div>
+    <div id="lessonContent" style="margin-top:10px"></div>
   </div>
 </div>
 
-<!-- WINDOW: TEACHER DASHBOARD -->
 <div class="window" id="dashboardWin" style="width:95%;height:85%">
   <div class="titlebar"><span>Teacher Dashboard</span><button onclick="closeWin('dashboardWin')">×</button></div>
   <div class="content">
@@ -71,12 +75,35 @@ body{background:url('https://images.unsplash.com/photo-1554907984-15263bfd63bd?q
   </div>
 </div>
 
-<!-- OTHER WINDOWS: FILE, WORD, EXCEL SAME AS 6/10 -->
-<div class="window" id="fileWin"><div class="titlebar"><span>File Explorer</span><button onclick="closeWin('fileWin')">×</button></div><div class="content"><button onclick="newFolder()">New Folder</button><div id="fileList"></div></div></div>
-<div class="window" id="wordWin"><div class="titlebar"><span>Word</span><button onclick="closeWin('wordWin')">×</button></div><div class="content"><button onclick="saveWork()">Save Work</button><div id="word" contenteditable style="background:#fff;height:100%"></div></div></div>
-<div class="window" id="excelWin"><div class="titlebar"><span>Excel</span><button onclick="closeWin('excelWin')">×</button></div><div class="content"><button onclick="submitExcelTest()">Submit Excel Test</button><div id="excelGrid"></div></div></div>
+<div class="window" id="fileWin">
+  <div class="titlebar"><span>File Explorer</span><button onclick="closeWin('fileWin')">×</button></div>
+  <div class="content"><button class="btn" onclick="newFolder()">📁 New Folder</button><div id="fileList" style="margin-top:10px"></div></div>
+</div>
 
-<div class="taskbar"><button class="btn" onclick="toggleStart()">⊞ Start</button><div id="clock"></div></div>
+<div class="window" id="wordWin">
+  <div class="titlebar"><span>Word</span><button onclick="closeWin('wordWin')">×</button></div>
+  <div class="content"><button class="btn" onclick="saveWork()">💾 Save Work</button><div id="word" contenteditable style="background:#fff;height:300px;padding:10px;border:1px solid #ccc">Type here...</div></div>
+</div>
+
+<div class="window" id="excelWin">
+  <div class="titlebar"><span>Excel</span><button onclick="closeWin('excelWin')">×</button></div>
+  <div class="content">
+    <p>Enter 10, 20, 30 in A1, A2, A3. Then click Submit</p>
+    <button class="btn" onclick="submitExcelTest()">Submit Excel Test</button><span id="excelResult"></span>
+    <div class="excel-grid" id="excelGrid" style="margin-top:10px"></div>
+  </div>
+</div>
+
+<!-- TASKBAR + START -->
+<div class="taskbar">
+  <button class="btn" onclick="toggleStart()">⊞ Start</button>
+  <div id="clock"></div>
+</div>
+<div class="start-menu" id="startMenu">
+  <div onclick="openWin('wordWin')">📄 Word</div>
+  <div onclick="openWin('excelWin')">📊 Excel</div>
+  <div onclick="openWin('fileWin')">📁 File Explorer</div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -84,51 +111,77 @@ let currentUser="", userType="", studentData=JSON.parse(localStorage.getItem('st
 let files=["Documents","Desktop"];
 
 function login(){
-  currentUser=document.getElementById('userName').value;
+  currentUser=document.getElementById('userName').value.trim();
   userType=document.getElementById('userType').value;
   if(!currentUser) return alert("Enter name");
   document.getElementById('loginScreen').style.display='none';
   if(userType=='teacher') document.getElementById('dashboardIcon').style.display='block';
   if(!studentData[currentUser]) studentData[currentUser]={marks:[],files:[]};
-  showToast("Welcome "+currentUser); loadGrade(8); loadFiles(); buildExcel();
+  showToast("Welcome "+currentUser);
+  loadGrade(8, document.querySelector('.grade-btn'));
+  loadFiles();
+  buildExcel();
+  updateDashboard();
 }
 
 function showToast(msg){let t=document.getElementById('toast'); t.innerText=msg; t.style.display='block'; setTimeout(()=>t.style.display='none',2000)}
-function openWin(id){document.getElementById(id).style.display='flex'; playSound()}
+function openWin(id){document.getElementById(id).style.display='flex'}
 function closeWin(id){document.getElementById(id).style.display='none'}
-function playSound(){new Audio('https://www.soundjay.com/windows/windows-1.mp3').play().catch(()=>{})}
+function toggleStart(){let m=document.getElementById('startMenu');m.style.display=m.style.display=='block'?'none':'block'}
 
-// CAPS Lessons
+// CAPS Lessons - FIXED
 const lessons={
-  8: "<h3>Grade 8: Computer Basics</h3><p>1. What is hardware/software</p><p>2. Windows Desktop</p><video width=100% controls src=''></video>",
-  9: "<h3>Grade 9: Word Processing</h3><p>1. Formatting text</p><p>2. Insert tables</p>",
-  10:"<h3>Grade 10: Spreadsheets</h3><p>1. Formulas: SUM, AVERAGE</p><p>2. Cell references</p>"
+  8: "<h3>Grade 8: Computer Basics</h3><p>1. What is hardware/software</p><p>2. Windows Desktop, Taskbar, Icons</p>",
+  9: "<h3>Grade 9: Word Processing</h3><p>1. Formatting: Bold, Italic</p><p>2. Insert tables and images</p>",
+  10:"<h3>Grade 10: Spreadsheets</h3><p>1. Formulas: =SUM, =AVERAGE</p><p>2. Cell references A1, B2</p>"
 }
-function loadGrade(g){document.querySelectorAll('.grade-btn').forEach(b=>b.classList.remove('active')); event.target.classList.add('active'); document.getElementById('lessonContent').innerHTML=lessons[g]}
+function loadGrade(g, btn){
+  document.querySelectorAll('.grade-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  document.getElementById('lessonContent').innerHTML=lessons[g]
+}
 
-// File Explorer with auto-marking
-function loadFiles(){document.getElementById('fileList').innerHTML=files.map(f=>`<div>${f}</div>`).join('')}
+// File Explorer
+function loadFiles(){document.getElementById('fileList').innerHTML=files.map(f=>`<div style="padding:5px;border-bottom:1px solid #eee">📁 ${f}</div>`).join('')}
 function newFolder(){let name=prompt("Folder name:"); if(name){files.push(name); loadFiles(); checkFolderTest(name)}}
-function checkFolderTest(name){ if(name=="MyWork"){ studentData[currentUser].marks.push({test:"Create Folder", score:100}); saveData(); showToast("Test 1 Passed! +100") }}
+function checkFolderTest(name){
+  if(name.toLowerCase()=="mywork"){
+    studentData[currentUser].marks.push({test:"Create Folder", score:100});
+    saveData();
+    showToast("Test 1 Passed! +100")
+  }
+}
 
-// Excel Auto-marking
-function buildExcel(){let g=document.getElementById('excelGrid');g.innerHTML='<div></div><div>A</div><div>B</div>';for(let r=1;r<=5;r++){g.innerHTML+=`<div>${r}</div>`;for(let c=0;c<2;c++)g.innerHTML+=`<input id="e${r}${c}">`}}
+// Excel - FIXED
+function buildExcel(){
+  let g=document.getElementById('excelGrid');
+  g.innerHTML='<div></div><div>A</div><div>B</div><div>C</div><div>D</div><div>E</div>';
+  for(let r=1;r<=10;r++){
+    g.innerHTML+=`<div><b>${r}</b></div>`;
+    for(let c=0;c<5;c++)g.innerHTML+=`<input id="e${r}${c}" type="number">`
+  }
+}
 function submitExcelTest(){
   let a1=Number(document.getElementById('e10').value)||0;
   let a2=Number(document.getElementById('e20').value)||0;
   let a3=Number(document.getElementById('e30').value)||0;
   let sum=a1+a2+a3;
-  if(sum==60){ studentData[currentUser].marks.push({test:"SUM Formula", score:100}); showToast("Correct! SUM=60")}
-  else {showToast("Wrong. Check your =SUM")}
+  document.getElementById('excelResult').innerText = " Your Sum: "+sum;
+  if(sum==60){
+    studentData[currentUser].marks.push({test:"SUM Formula", score:100});
+    showToast("Correct! SUM=60 +100")
+  } else {
+    showToast("Wrong. A1+A2+A3 should = 60")
+  }
   saveData();
 }
 
-// Teacher Dashboard
+// Teacher Dashboard - FIXED
 function updateDashboard(){
-  let html="<tr><th>Student</th><th>Tests Done</th><th>Total %</th></tr>";
+  let html="<tr><th>Student</th><th>Tests Done</th><th>Average %</th></tr>";
   for(let s in studentData){
     let total=studentData[s].marks.reduce((a,b)=>a+b.score,0);
-    let avg=studentData[s].marks.length? (total/studentData[s].marks.length) : 0;
+    let avg=studentData[s].marks.length? (total/studentData[s].marks.length).toFixed(0) : 0;
     html+=`<tr><td>${s}</td><td>${studentData[s].marks.length}</td><td>${avg}%</td></tr>`
   }
   document.getElementById('dashboardTable').innerHTML=html;
@@ -136,14 +189,30 @@ function updateDashboard(){
 function exportMarks(){
   let csv="Student,Test,Score\n";
   for(let s in studentData){ studentData[s].marks.forEach(m=>csv+=`${s},${m.test},${m.score}\n`)}
-  let blob=new Blob([csv],{type:'text/csv'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download="ClassMarks.csv"; a.click();
+  let blob=new Blob([csv],{type:'text/csv'});
+  let a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download="ClassMarks.csv";
+  a.click();
+  showToast("Downloaded ClassMarks.csv")
 }
 function saveData(){localStorage.setItem('studentData',JSON.stringify(studentData)); updateDashboard()}
 
 // Save work
-function saveWork(){ studentData[currentUser].files.push(document.getElementById('word').innerText); saveData(); showToast("Work Saved") }
+function saveWork(){
+  let text = document.getElementById('word').innerText;
+  studentData[currentUser].files.push(text);
+  saveData();
+  showToast("Work Saved")
+}
 
+// Clock
 setInterval(()=>{document.getElementById('clock').innerText=new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})},1000)
+
+// Close start menu when clicking outside
+document.addEventListener('click', (e)=>{
+  if(!e.target.closest('.start-menu') &&!e.target.closest('.btn')) document.getElementById('startMenu').style.display='none'
+})
 </script>
 </body>
 </html>
